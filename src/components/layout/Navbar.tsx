@@ -46,6 +46,11 @@ export function Navbar() {
     return () => observer.disconnect();
   }, []);
 
+  // Cerrar menú móvil al hacer click en un enlace (sin interferir con el href nativo)
+  const handleMobileLinkClick = () => {
+    setIsMobileMenuOpen(false);
+  };
+
   return (
     <motion.header
       id="top"
@@ -120,7 +125,7 @@ export function Navbar() {
                   <a
                     key={item.label}
                     href={item.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
+                    onClick={handleMobileLinkClick}
                     className={cn(
                       'block w-full text-left px-4 py-3 rounded-lg font-medium transition-colors touch-manipulation',
                       activeSection === item.href
