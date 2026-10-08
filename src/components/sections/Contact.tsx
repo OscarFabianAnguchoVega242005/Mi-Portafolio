@@ -94,15 +94,29 @@ export function Contact() {
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
 
-    console.log('Formulario enviado:', formData);
+      const data = await response.json();
 
-    setIsSubmitting(false);
-    setSubmitStatus('success');
-    setFormData(initialFormData);
+      if (!response.ok) {
+        throw new Error(data.error || 'Error enviando el mensaje');
+      }
 
-    setTimeout(() => setSubmitStatus('idle'), 5000);
+      setIsSubmitting(false);
+      setSubmitStatus('success');
+      setFormData(initialFormData);
+      setTimeout(() => setSubmitStatus('idle'), 5000);
+    } catch (error) {
+      setIsSubmitting(false);
+      setSubmitStatus('error');
+      console.error('Error:', error);
+      setTimeout(() => setSubmitStatus('idle'), 5000);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -193,6 +207,26 @@ export function Contact() {
                     <div>
                       <p className="font-medium text-green-800 dark:text-green-300">¡Mensaje enviado!</p>
                       <p className="text-sm text-green-600 dark:text-green-400">Te responderé lo antes posible.</p>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+              {submitStatus === 'error' && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95, y: -10 }}
+                  className="mb-6 p-4 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="w-10 h-10 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center flex-shrink-0">
+                      <svg className="w-5 h-5 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </span>
+                    <div>
+                      <p className="font-medium text-red-800 dark:text-red-300">Error al enviar</p>
+                      <p className="text-sm text-red-600 dark:text-red-400">Inténtalo de nuevo más tarde.</p>
                     </div>
                   </div>
                 </motion.div>
