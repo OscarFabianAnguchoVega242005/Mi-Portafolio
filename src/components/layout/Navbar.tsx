@@ -74,51 +74,46 @@ export function NavbarComponent() {
     >
       <nav className="container mx-auto px-4 h-full" aria-label="Navegación principal">
         <div className="flex items-center justify-between h-full gap-4">
-          {/* Logo - siempre visible */}
-          <a
-            href="#home"
-            className="text-xl font-bold bg-gradient-to-r from-primary to-gold bg-clip-text text-transparent flex-shrink-0"
-            aria-label="Ir al inicio"
-          >
-            Oscar Angucho
-          </a>
+          {/* Logo + Nav en una sola fila flexible */}
+          <div className="flex items-center justify-between w-full gap-4 flex-wrap">
+            {/* Logo - siempre visible */}
+            <a
+              href="#home"
+              className="text-xl font-bold bg-gradient-to-r from-primary to-gold bg-clip-text text-transparent flex-shrink-0"
+              aria-label="Ir al inicio"
+            >
+              Oscar Angucho
+            </a>
 
-          {/* Desktop Nav - enlaces nativos */}
-          <div className="hidden md:flex items-center gap-6">
-            {navItems.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                onClick={(e) => { e.preventDefault(); handleNavClick(item.href); }}
-                className={cn(
-                  'text-sm font-medium transition-colors relative pb-1',
-                  activeSection === item.href
-                    ? 'text-primary'
-                    : 'text-neutral-400 hover:text-primary'
-                )}
-              >
-                {item.label}
-                <span
+            {/* Nav links - siempre visibles en desktop, en móvil colapsan */}
+            <div className="hidden md:flex items-center gap-4 flex-wrap">
+              {navItems.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  onClick={(e) => { e.preventDefault(); handleNavClick(item.href); }}
                   className={cn(
-                    'absolute bottom-0 left-0 right-0 h-0.5 transition-transform duration-200',
+                    'text-sm font-medium transition-colors relative pb-1 px-3 py-2 rounded-lg touch-manipulation whitespace-nowrap',
                     activeSection === item.href
-                      ? 'bg-primary scale-x-100 origin-center'
-                      : 'bg-primary scale-x-0 origin-center'
+                      ? 'bg-primary/10 text-primary'
+                      : 'text-neutral-400 hover:text-primary hover:bg-neutral-800/50'
                   )}
-                />
-              </a>
-            ))}
-          </div>
+                >
+                  {item.label}
+                </a>
+              ))}
+            </div>
 
-          {/* Mobile hamburger button */}
-          <button
-            className="md:hidden p-2 rounded-lg text-neutral-400 hover:bg-neutral-800 touch-manipulation"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Abrir menú"
-            aria-expanded={isMobileMenuOpen}
-          >
-            {isMobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
-          </button>
+            {/* Mobile hamburger button */}
+            <button
+              className="md:hidden p-2 rounded-lg text-neutral-400 hover:bg-neutral-800 touch-manipulation"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Abrir menú"
+              aria-expanded={isMobileMenuOpen}
+            >
+              {isMobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile dropdown menu */}
