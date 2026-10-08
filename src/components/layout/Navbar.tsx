@@ -1,13 +1,15 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Navbar as BsNavbar, Nav, NavDropdown, Container, Navbar } from 'react-bootstrap';
+import { motion, AnimatePresence } from 'framer-motion';
+import { navItems } from '../../data/personal';
 import { useScrollPosition } from '../../hooks';
 import { cn } from '../../utils/helpers';
-import { navItems } from '../../data/personal';
+import { MenuIcon, CloseIcon } from '../ui/Icons';
 
 export function NavbarComponent() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('#home');
   const scrollY = useScrollPosition();
 
@@ -55,52 +57,43 @@ export function NavbarComponent() {
         behavior: 'smooth',
       });
     }
+    setIsMobileMenuOpen(false);
   };
 
   return (
-    <BsNavbar
+    <motion.header
       id="top"
-      fixed="top"
-      expand="lg"
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
       className={cn(
-        'transition-all duration-300 h-16',
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-300 h-16',
         isScrolled
-          ? 'bg-white/95 dark:bg-slate-950/95 backdrop-blur-md border-b border-slate-200/50 dark:border-slate-800/50'
-          : 'bg-white/80 dark:bg-slate-950/80 backdrop-blur-md'
+          ? 'bg-neutral-950/95 backdrop-blur-md border-b border-neutral-800/50'
+          : 'bg-neutral-950/80 backdrop-blur-md'
       )}
     >
-      <Container fluid className="px-4 h-full">
-        {/* Logo - siempre visible */}
-        <BsNavbar.Brand
-          href="#home"
-          className="text-xl font-bold bg-gradient-to-r from-primary to-indigo-600 bg-clip-text text-transparent flex-shrink-0"
-          aria-label="Ir al inicio"
-        >
-          Oscar Angucho
-        </BsNavbar.Brand>
+      <nav className="container mx-auto px-4 h-full" aria-label="Navegación principal">
+        <div className="flex items-center justify-between h-full gap-4">
+          {/* Logo - siempre visible */}
+          <a
+            href="#home"
+            className="text-xl font-bold bg-gradient-to-r from-primary to-emerald-600 bg-clip-text text-transparent flex-shrink-0"
+            aria-label="Ir al inicio"
+          >
+            Oscar Angucho
+          </a>
 
-        {/* Mobile toggler */}
-        <BsNavbar.Toggle
-          aria-controls="navbar-nav"
-          className="md:hidden p-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 touch-manipulation"
-        />
-
-        {/* Collapsible nav */}
-        <BsNavbar.Collapse id="navbar-nav" className="justify-content-end">
-          <Nav className="gap-6 md:gap-6" activeKey={activeSection}>
+          {/* Desktop Nav - enlaces nativos */}
+          <div className="hidden md:flex items-center gap-6">
             {navItems.map((item) => (
-              <Nav.Link
+              <a
                 key={item.label}
                 href={item.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleNavClick(item.href);
-                }}
                 className={cn(
-                  'text-sm font-medium transition-colors relative pb-1 touch-manipulation',
+                  'text-sm font-medium transition-colors relative pb-1',
                   activeSection === item.href
                     ? 'text-primary'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-primary'
+                    : 'text-neutral-400 hover:text-primary'
                 )}
               >
                 {item.label}
@@ -112,11 +105,51 @@ export function NavbarComponent() {
                       : 'bg-primary scale-x-0 origin-center'
                   )}
                 />
-              </Nav.Link>
+              </a>
             ))}
-          </Nav>
-        </BsNavbar.Collapse>
-      </Container>
-    </BsNavbar>
+          </div>
+
+          {/* Mobile hamburger button */}
+          <button
+            className="md:hidden p-2 rounded-lg text-neutral-400 hover:bg-neutral-800 touch-manipulation"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Abrir menú"
+            aria-expanded={isMobileMenuOpen}
+          >
+            {isMobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
+          </button>
+        </div>
+
+        {/* Mobile dropdown menu */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="md:hidden absolute top-full left-0 right-0 bg-neutral-950 border-b border-neutral-800 py-4 shadow-lg"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <div className="container mx-auto px-4 space-y-2">
+                {navItems.map((item) => (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    className={cn(
+                      'block w-full text-left px-4 py-3 rounded-lg font-medium transition-colors touch-manipulation',
+                      activeSection === item.href
+                        ? 'bg-primary/10 text-primary'
+                        : 'text-neutral-400 hover:text-primary hover:bg-neutral-800'
+                    )}
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </nav>
+    </motion.header>
   );
 }

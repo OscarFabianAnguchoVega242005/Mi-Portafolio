@@ -2,19 +2,18 @@ import { forwardRef, type ButtonHTMLAttributes } from 'react';
 import { cn } from '../../utils/helpers';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
+  variant?: 'primary' | 'outline' | 'ghost';
   size?: 'sm' | 'md' | 'lg';
   isLoading?: boolean;
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = 'primary', size = 'md', isLoading, children, disabled, ...props }, ref) => {
-    const baseStyles = 'inline-flex items-center justify-center font-semibold rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
+    const baseStyles = 'inline-flex items-center justify-center font-semibold rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-950 disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation';
     
     const variants = {
-      primary: 'bg-primary text-white hover:bg-primary-dark focus:ring-primary shadow-lg shadow-primary/25',
-      secondary: 'bg-secondary text-white hover:bg-cyan-600 focus:ring-secondary shadow-lg shadow-secondary/25',
-      outline: 'border-2 border-primary text-primary hover:bg-primary hover:text-white focus:ring-primary',
+      primary: 'bg-primary text-white hover:bg-primary-hover focus:ring-primary',
+      outline: 'border-2 border-primary text-primary hover:bg-primary/10 hover:text-white focus:ring-primary',
       ghost: 'text-primary hover:bg-primary/10 focus:ring-primary',
     };
     

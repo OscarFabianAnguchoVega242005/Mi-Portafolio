@@ -1,8 +1,9 @@
+'use client';
+
 import { motion, useReducedMotion } from 'framer-motion';
 import { SectionHeader } from '../ui/SectionHeader';
 import { Button } from '../ui/Button';
 import { CheckIcon } from '../ui/Icons';
-import { scrollToSection } from '../../utils/scroll';
 
 const skillCategories = [
   {
@@ -17,23 +18,23 @@ const skillCategories = [
       { name: 'TypeScript', level: 'Básico' },
     ],
   },
-{
-      name: 'Bases de datos',
-      skills: [
-        { name: 'Supabase', level: 'Intermedio' },
-        { name: 'PostgreSQL', level: 'Intermedio' },
-        { name: 'MySQL', level: 'Intermedio' },
-      ],
-    },
-{
-      name: 'Herramientas',
-      skills: [
-        { name: 'Git', level: 'Intermedio' },
-        { name: 'GitHub', level: 'Intermedio' },
-        { name: 'Cloudflare Pages', level: 'Intermedio' },
-        { name: 'Render', level: 'Intermedio' },
-      ],
-    },
+  {
+    name: 'Bases de datos',
+    skills: [
+      { name: 'Supabase', level: 'Intermedio' },
+      { name: 'PostgreSQL', level: 'Intermedio' },
+      { name: 'MySQL', level: 'Intermedio' },
+    ],
+  },
+  {
+    name: 'Herramientas',
+    skills: [
+      { name: 'Git', level: 'Intermedio' },
+      { name: 'GitHub', level: 'Intermedio' },
+      { name: 'Cloudflare Pages', level: 'Intermedio' },
+      { name: 'Render', level: 'Intermedio' },
+    ],
+  },
   {
     name: 'Aprendiendo',
     skills: [
@@ -48,15 +49,15 @@ const skillCategories = [
 function getLevelColor(level: string) {
   switch (level) {
     case 'Avanzado':
-      return 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 border-green-200 dark:border-green-800';
+      return 'bg-primary/20 text-primary border-primary/30';
     case 'Intermedio':
-      return 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-blue-800';
+      return 'bg-primary/10 text-primary border-primary/20';
     case 'Básico':
-      return 'bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700';
+      return 'bg-neutral-800 text-neutral-400 border-neutral-700';
     case 'Aprendiendo':
-      return 'bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-800';
+      return 'bg-red/10 text-red border-red/20';
     default:
-      return 'bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700';
+      return 'bg-neutral-800 text-neutral-400 border-neutral-700';
   }
 }
 
@@ -64,37 +65,35 @@ export function Skills() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section
-      id="skills"
-      aria-labelledby="skills-title"
-      className="py-24 md:py-32 bg-white dark:bg-slate-950"
-    >
+    <section id="skills" aria-labelledby="skills-title" className="py-24 md:py-32 bg-neutral-950">
       <div className="container px-6">
         <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
           className="max-w-3xl mx-auto text-center mb-16"
         >
-          <SectionHeader
-            title="Habilidades"
-            subtitle="Las tecnologías que uso a diario y las que estoy aprendiendo."
-          />
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-4">
+            Habilidades
+          </h2>
+          <p className="text-lg md:text-xl text-neutral-400 max-w-2xl mx-auto">
+            Las tecnologías que uso a diario y las que estoy aprendiendo.
+          </p>
         </motion.div>
 
         <div className="space-y-0">
           {skillCategories.map((category, catIndex) => (
             <motion.div
               key={category.name}
-              initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.5, delay: catIndex * 0.08, ease: 'easeOut' }}
-              className="border-t border-slate-200 dark:border-slate-800 first:border-0 pt-8 first:pt-0"
+              className="border-t border-neutral-800 first:border-0 pt-8 first:pt-0"
             >
               <div className="grid md:grid-cols-[12rem_1fr] gap-6 items-start">
-                <h3 className="text-lg font-semibold text-slate-900 dark:text-white md:pr-4">
+                <h3 className="text-lg font-semibold text-white md:pr-4">
                   {category.name}
                 </h3>
                 <div className="flex flex-wrap gap-3">
@@ -114,18 +113,20 @@ export function Skills() {
         </div>
 
         <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3, ease: 'easeOut' }}
           className="mt-16 flex flex-col sm:flex-row items-center justify-center gap-4 text-center sm:text-left"
         >
-          <p className="text-slate-600 dark:text-slate-400 max-w-md">
-            ¿Necesitas algo que no ves aquí? Aprendo rápido.
+          <p className="text-neutral-500 max-w-md">
+            ¿Buscas algo específico? Estoy en constante aprendizaje. Si necesitas una tecnología que no ves aquí, ¡probablemente pueda aprenderla rápido!
           </p>
-          <Button variant="outline" onClick={() => scrollToSection('#contact')}>
+          <Button variant="outline" onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}>
             Hablemos de tu proyecto
-            <CheckIcon className="w-4 h-4" />
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
           </Button>
         </motion.div>
       </div>

@@ -2,16 +2,17 @@
 @import "bootstrap/dist/css/bootstrap.min.css";
 
 @theme {
-  --color-primary: #21a058;
-  --color-primary-hover: #1e8a4d;
-  --color-gold: #ae8c25;
-  --color-bg: #0a0a0a;
-  --color-bg-alt: #111111;
-  --color-bg-card: #1a1a1a;
+  --color-primary: #00d4aa;        /* azul aguamarina */
+  --color-primary-hover: #00bf9b;
+  --color-gold: #d4a817;           /* dorado */
+  --color-red: #e83e3e;            /* rojo para alertas */
+  --color-bg: #050505;             /* negro puro */
+  --color-bg-alt: #0d0d0d;
+  --color-bg-card: #151515;
   --color-text: #ffffff;
-  --color-muted: #a0a0a0;
-  --color-border: #333333;
-  --color-card: #1a1a1a;
+  --color-muted: #888888;
+  --color-border: #222222;
+  --color-card: #111111;
   --color-radius: 12px;
   --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
@@ -25,6 +26,6 @@
   :focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; border-radius: 6px; }
 }
 
-.navbar { --bs-navbar-toggler-icon-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgb(33, 160, 88)' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); }
-.navbar-toggler { border-color: rgba(33, 160, 88, 0.5); }
-.navbar-toggler:focus { box-shadow: 0 0 0 0.25rem rgba(33, 160, 88, 0.25); }
+.navbar { --bs-navbar-toggler-icon-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgb(0, 212, 170)' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); }
+.navbar-toggler { border-color: rgba(0, 212, 170, 0.5); }
+.navbar-toggler:focus { box-shadow: 0 0 0 0.25rem rgba(0, 212, 170, 0.25); }
