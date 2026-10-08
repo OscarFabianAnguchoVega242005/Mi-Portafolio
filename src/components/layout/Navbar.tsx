@@ -72,9 +72,9 @@ export function NavbarComponent() {
     >
       <nav className="container mx-auto px-4 h-full" aria-label="Navegación principal">
         <div className="flex items-center justify-between h-full gap-4">
-          {/* Logo + Nav en una sola fila que se ajusta */}
+          {/* Logo + Nav en contenedor que se ajusta en móvil */}
           <div className="flex items-center justify-between w-full gap-4 flex-wrap">
-            {/* Logo - siempre visible */}
+            {/* Logo - se encoge si es necesario */}
             <a
               href="#home"
               className="text-xl font-bold bg-gradient-to-r from-primary to-gold bg-clip-text text-transparent flex-shrink-0"
@@ -83,7 +83,7 @@ export function NavbarComponent() {
               Oscar Angucho
             </a>
 
-            {/* Nav links - SIEMPRE visibles, se ajustan con flex-wrap */}
+            {/* Nav links - siempre visibles, se ajustan con flex-wrap */}
             <div className="flex flex-wrap items-center gap-2 md:gap-4 w-full md:w-auto justify-center md:justify-end">
               {navItems.map((item) => (
                 <a
