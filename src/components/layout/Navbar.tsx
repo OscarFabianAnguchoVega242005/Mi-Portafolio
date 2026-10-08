@@ -49,7 +49,7 @@ export function NavbarComponent() {
   const handleNavClick = (href: string) => {
     const element = document.querySelector(href);
     if (element) {
-      const headerHeight = 72;
+      const headerHeight = 64;
       const elementPosition = element.getBoundingClientRect().top + window.scrollY;
       const offsetPosition = elementPosition - headerHeight - 16;
       window.scrollTo({
@@ -66,7 +66,7 @@ export function NavbarComponent() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300 h-16',
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-300 h-14',
         isScrolled
           ? 'bg-neutral-950/95 backdrop-blur-md border-b border-neutral-800/50'
           : 'bg-neutral-950/80 backdrop-blur-md'
@@ -77,7 +77,7 @@ export function NavbarComponent() {
           {/* Logo - siempre visible */}
           <a
             href="#home"
-            className="text-xl font-bold bg-gradient-to-r from-primary to-emerald-600 bg-clip-text text-transparent flex-shrink-0"
+            className="text-xl font-bold bg-gradient-to-r from-primary to-gold bg-clip-text text-transparent flex-shrink-0"
             aria-label="Ir al inicio"
           >
             Oscar Angucho

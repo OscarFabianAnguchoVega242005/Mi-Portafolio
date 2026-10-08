@@ -3,9 +3,9 @@ export function scrollToSection(href: string) {
   const element = document.querySelector(href);
   if (!element) return;
 
-  const headerHeight = 72; // h-18 = 72px
+  const headerHeight = 56; // h-14 = 56px
   const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-  const offsetPosition = elementPosition - headerHeight - 16; // 16px extra padding
+  const offsetPosition = elementPosition - headerHeight - 16;
 
   window.scrollTo({
     top: offsetPosition,

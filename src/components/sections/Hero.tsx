@@ -19,7 +19,7 @@ export function Hero() {
     >
       <div className="absolute -top-32 right-0 w-[520px] h-[520px] rounded-full bg-primary/10 blur-3xl" aria-hidden="true" />
 
-      <div className="container relative z-10 px-6 pt-28 pb-24">
+      <div className="container relative z-10 px-6 pt-20 pb-24">
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
