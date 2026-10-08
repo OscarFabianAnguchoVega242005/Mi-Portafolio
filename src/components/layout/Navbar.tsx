@@ -9,7 +9,6 @@ import { MenuIcon, CloseIcon } from '../ui/Icons';
 
 export function NavbarComponent() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('#home');
   const scrollY = useScrollPosition();
 
@@ -57,7 +56,6 @@ export function NavbarComponent() {
         behavior: 'smooth',
       });
     }
-    setIsMobileMenuOpen(false);
   };
 
   return (
@@ -74,7 +72,7 @@ export function NavbarComponent() {
     >
       <nav className="container mx-auto px-4 h-full" aria-label="Navegación principal">
         <div className="flex items-center justify-between h-full gap-4">
-          {/* Logo + Nav en una sola fila flexible */}
+          {/* Logo + Nav en una sola fila que se ajusta */}
           <div className="flex items-center justify-between w-full gap-4 flex-wrap">
             {/* Logo - siempre visible */}
             <a
@@ -85,8 +83,8 @@ export function NavbarComponent() {
               Oscar Angucho
             </a>
 
-            {/* Nav links - siempre visibles en desktop, en móvil colapsan */}
-            <div className="hidden md:flex items-center gap-4 flex-wrap">
+            {/* Nav links - SIEMPRE visibles, se ajustan con flex-wrap */}
+            <div className="flex flex-wrap items-center gap-2 md:gap-4 w-full md:w-auto justify-center md:justify-end">
               {navItems.map((item) => (
                 <a
                   key={item.label}
@@ -103,48 +101,8 @@ export function NavbarComponent() {
                 </a>
               ))}
             </div>
-
-            {/* Mobile hamburger button */}
-            <button
-              className="md:hidden p-2 rounded-lg text-neutral-400 hover:bg-neutral-800 touch-manipulation"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label="Abrir menú"
-              aria-expanded={isMobileMenuOpen}
-            >
-              {isMobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
-            </button>
           </div>
         </div>
-
-        {/* Mobile dropdown menu */}
-        <AnimatePresence>
-          {isMobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="md:hidden absolute top-full left-0 right-0 bg-neutral-950 border-b border-neutral-800 py-4 shadow-lg"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              <div className="container mx-auto px-4 space-y-2">
-                {navItems.map((item) => (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    className={cn(
-                      'block w-full text-left px-4 py-3 rounded-lg font-medium transition-colors touch-manipulation',
-                      activeSection === item.href
-                        ? 'bg-primary/10 text-primary'
-                        : 'text-neutral-400 hover:text-primary hover:bg-neutral-800'
-                    )}
-                  >
-                    {item.label}
-                  </a>
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </nav>
     </motion.header>
   );
