@@ -7,7 +7,6 @@ import { useScrollPosition } from '../../hooks';
 import { scrollToSection } from '../../utils/scroll';
 import { cn } from '../../utils/helpers';
 import { MenuIcon, CloseIcon } from '../ui/Icons';
-import { Button } from '../ui/Button';
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -111,28 +110,15 @@ export function Navbar() {
             ))}
           </div>
 
-          {/* Mobile: hamburger button + desktop CTA */}
-          <div className="flex items-center gap-3">
-            {/* Desktop CTA */}
-            <Button
-              variant="primary"
-              size="sm"
-              onClick={() => handleNavClick('#contact')}
-              className="hidden md:block px-5 py-2"
-            >
-              Contactar
-            </Button>
-
-            {/* Mobile hamburger button */}
-            <button
-              className="md:hidden p-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 touch-manipulation"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label={isMobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
-              aria-expanded={isMobileMenuOpen}
-            >
-              {isMobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
-            </button>
-          </div>
+          {/* Mobile hamburger button */}
+          <button
+            className="md:hidden p-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 touch-manipulation"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label={isMobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
+            aria-expanded={isMobileMenuOpen}
+          >
+            {isMobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
+          </button>
         </div>
 
         {/* Mobile dropdown menu */}
@@ -161,13 +147,6 @@ export function Navbar() {
                     {item.label}
                   </motion.button>
                 ))}
-                <Button
-                  variant="primary"
-                  className="w-full mt-2 touch-manipulation"
-                  onClick={() => handleNavClick('#contact')}
-                >
-                  Contactar
-                </Button>
               </div>
             </motion.div>
           )}
