@@ -10,7 +10,7 @@ function App() {
   return (
     <>
       <NavbarComponent />
-      <main id="main-content" className="pt-16 md:pt-20">
+      <main id="main-content">
         <Hero />
         <About />
         <Projects />

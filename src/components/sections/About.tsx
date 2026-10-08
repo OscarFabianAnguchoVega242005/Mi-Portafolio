@@ -59,12 +59,16 @@ export function About() {
           >
             <div className="space-y-6">
               <div className="flex items-center gap-3">
-                <Button size="lg" variant="outline" className="gap-2">
+                <a
+                  href="/Oscar_Angucho_HV.pdf"
+                  download
+                  className="inline-flex items-center gap-2 px-6 py-3 border-2 border-primary text-primary font-semibold rounded-lg hover:bg-primary hover:text-white transition-colors gap-2"
+                >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                   </svg>
                   Descargar CV
-                </Button>
+                </a>
                 <a
                   href="https://github.com/OscarFabianAnguchoVega242005?tab=repositories"
                   target="_blank"
