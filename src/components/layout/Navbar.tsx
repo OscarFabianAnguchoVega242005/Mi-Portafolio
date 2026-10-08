@@ -46,11 +46,6 @@ export function Navbar() {
     return () => observer.disconnect();
   }, []);
 
-  // Cerrar menú móvil al hacer click en un enlace (sin interferir con el href nativo)
-  const handleMobileLinkClick = () => {
-    setIsMobileMenuOpen(false);
-  };
-
   return (
     <motion.header
       id="top"
@@ -111,7 +106,7 @@ export function Navbar() {
           </button>
         </div>
 
-        {/* Mobile dropdown menu */}
+        {/* Mobile dropdown menu - click en el fondo cierra el menú */}
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div
@@ -119,13 +114,13 @@ export function Navbar() {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               className="md:hidden absolute top-full left-0 right-0 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 py-4 shadow-lg"
+              onClick={() => setIsMobileMenuOpen(false)}  // Click en el fondo cierra el menú
             >
               <div className="container mx-auto px-4 space-y-2">
                 {navItems.map((item) => (
                   <a
                     key={item.label}
                     href={item.href}
-                    onClick={handleMobileLinkClick}
                     className={cn(
                       'block w-full text-left px-4 py-3 rounded-lg font-medium transition-colors touch-manipulation',
                       activeSection === item.href
