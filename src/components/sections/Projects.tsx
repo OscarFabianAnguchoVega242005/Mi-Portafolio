@@ -78,8 +78,8 @@ export function Projects() {
             Proyectos
           </h2>
           <p className="text-lg text-neutral-400">
-            {projects.length} proyectos públicos de mi GitHub, actualizados automáticamente.
-          </p>
+              {allProjects.length} proyectos públicos de mi GitHub, actualizados automáticamente.
+            </p>
         </motion.div>
 
         <motion.div
