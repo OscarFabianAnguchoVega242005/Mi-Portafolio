@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { navItems } from '../../data/personal';
 import { useScrollPosition } from '../../hooks';
-import { scrollToSection } from '../../utils/scroll';
 import { cn } from '../../utils/helpers';
 import { MenuIcon, CloseIcon } from '../ui/Icons';
 
@@ -47,11 +46,6 @@ export function Navbar() {
     return () => observer.disconnect();
   }, []);
 
-  const handleNavClick = (href: string) => {
-    scrollToSection(href);
-    setIsMobileMenuOpen(false);
-  };
-
   return (
     <motion.header
       id="top"
@@ -69,10 +63,6 @@ export function Navbar() {
           {/* Logo - siempre visible */}
           <a
             href="#home"
-            onClick={(e) => {
-              e.preventDefault();
-              handleNavClick('#home');
-            }}
             className="text-xl font-bold bg-gradient-to-r from-primary to-indigo-600 bg-clip-text text-transparent flex-shrink-0"
             aria-label="Ir al inicio"
           >
@@ -109,7 +99,7 @@ export function Navbar() {
           <button
             className="md:hidden p-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 touch-manipulation"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label={isMobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
+            aria-label="Abrir menú"
             aria-expanded={isMobileMenuOpen}
           >
             {isMobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
@@ -130,7 +120,6 @@ export function Navbar() {
                   <a
                     key={item.label}
                     href={item.href}
-                    onClick={() => handleNavClick(item.href)}
                     className={cn(
                       'block w-full text-left px-4 py-3 rounded-lg font-medium transition-colors touch-manipulation',
                       activeSection === item.href
