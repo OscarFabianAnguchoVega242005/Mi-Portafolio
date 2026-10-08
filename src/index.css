@@ -44,6 +44,11 @@
     scroll-behavior: smooth;
   }
 
+  /* Compensar header fijo (72px) + padding extra */
+  section[id] {
+    scroll-margin-top: 88px;
+  }
+
   body {
     font-family: var(--font-sans);
     background-color: var(--color-light);
