@@ -79,23 +79,18 @@ export function Navbar() {
             Oscar Angucho
           </a>
 
-          {/* Desktop Nav - siempre horizontal */}
+          {/* Desktop Nav - enlaces nativos */}
           <div className="hidden md:flex items-center gap-6">
             {navItems.map((item) => (
-              <motion.a
+              <a
                 key={item.label}
                 href={item.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleNavClick(item.href);
-                }}
                 className={cn(
                   'text-sm font-medium transition-colors relative pb-1',
                   activeSection === item.href
                     ? 'text-primary'
                     : 'text-slate-600 dark:text-slate-400 hover:text-primary'
                 )}
-                whileHover={{ y: -1 }}
               >
                 {item.label}
                 <span
@@ -106,7 +101,7 @@ export function Navbar() {
                       : 'bg-primary scale-x-0 origin-center'
                   )}
                 />
-              </motion.a>
+              </a>
             ))}
           </div>
 
@@ -132,9 +127,9 @@ export function Navbar() {
             >
               <div className="container mx-auto px-4 space-y-2">
                 {navItems.map((item) => (
-                  <motion.button
+                  <a
                     key={item.label}
-                    type="button"
+                    href={item.href}
                     onClick={() => handleNavClick(item.href)}
                     className={cn(
                       'block w-full text-left px-4 py-3 rounded-lg font-medium transition-colors touch-manipulation',
@@ -142,10 +137,9 @@ export function Navbar() {
                         ? 'bg-primary/10 text-primary'
                         : 'text-slate-600 dark:text-slate-400 hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800'
                     )}
-                    layout
                   >
                     {item.label}
-                  </motion.button>
+                  </a>
                 ))}
               </div>
             </motion.div>
