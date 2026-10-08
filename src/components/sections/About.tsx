@@ -75,8 +75,9 @@ export function About() {
               <div className="flex items-center gap-3">
                 <a
                   href="/Oscar_Angucho_HV.pdf"
-                  download="Oscar_Angucho_CV.pdf"
-                  className="inline-flex items-center gap-2 px-6 py-3 border-2 border-primary text-primary font-semibold rounded-lg hover:bg-primary hover:text-white transition-colors"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-3 border-2 border-primary text-primary font-semibold rounded-lg hover:bg-primary hover:text-white transition-colors touch-manipulation"
                 >
                   <DownloadIcon className="w-5 h-5" />
                   Descargar CV

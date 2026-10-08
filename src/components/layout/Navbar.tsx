@@ -124,7 +124,7 @@ export function Navbar() {
 
             {/* Mobile menu button - SIEMPRE visible */}
             <button
-              className="md:hidden p-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+              className="md:hidden p-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 touch-manipulation"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label={isMobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
               aria-expanded={isMobileMenuOpen}
@@ -145,37 +145,27 @@ export function Navbar() {
             >
               <div className="px-6 py-4 space-y-2">
                 {navItems.map((item) => (
-                  <motion.a
+                  <button
                     key={item.label}
-                    href={item.href}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleNavClick(item.href);
-                    }}
+                    type="button"
+                    onClick={() => handleNavClick(item.href)}
                     className={cn(
-                        'block px-4 py-3 rounded-lg font-medium transition-colors',
+                        'block w-full text-left px-4 py-3 rounded-lg font-medium transition-colors touch-manipulation',
                         activeSection === item.href
                           ? 'bg-primary/10 text-primary'
                           : 'text-slate-600 dark:text-slate-400 hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800'
                       )}
-                    layout
                   >
                     {item.label}
-                  </motion.a>
+                  </button>
                 ))}
-                <motion.a
-                  href="#contact"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNavClick('#contact');
-                  }}
-                  className="block mx-4 mt-2 text-center"
-                  layout
+                <Button
+                  variant="primary"
+                  className="w-full mt-2 touch-manipulation"
+                  onClick={() => handleNavClick('#contact')}
                 >
-                  <Button variant="primary" className="w-full">
-                    Contactar
-                  </Button>
-                </motion.a>
+                  Contactar
+                </Button>
               </div>
             </motion.div>
           )}
