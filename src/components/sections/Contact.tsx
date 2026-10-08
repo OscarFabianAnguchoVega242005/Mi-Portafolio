@@ -94,12 +94,12 @@ export function Contact() {
 
     setIsSubmitting(true);
 
-    // Construir mensaje para WhatsApp
-    const whatsappMessage = `Hola Oscar, te contacto desde tu portfolio:%0A%0A` +
-      `*Nombre:* ${formData.name}%0A` +
-      `*Email:* ${formData.email}%0A` +
-      `*Asunto:* ${formData.subject}%0A%0A` +
-      `*Mensaje:*%0A${formData.message}`;
+    // Construir mensaje para WhatsApp con saltos de línea reales
+    const whatsappMessage = `Hola Oscar, te contacto desde tu portfolio:\n\n` +
+      `*Nombre:* ${formData.name}\n` +
+      `*Email:* ${formData.email}\n` +
+      `*Asunto:* ${formData.subject}\n\n` +
+      `*Mensaje:*\n${formData.message}`;
 
     const whatsappUrl = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(whatsappMessage)}`;
 

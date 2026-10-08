@@ -42,7 +42,6 @@ export function Navbar() {
       }
     });
 
-    // Observar home también
     const home = document.getElementById('home');
     if (home) observer.observe(home);
 
@@ -80,6 +79,7 @@ export function Navbar() {
             Oscar Angucho
           </a>
 
+          {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (
               <motion.a
@@ -110,16 +110,19 @@ export function Navbar() {
             ))}
           </div>
 
-          <div className="hidden md:flex items-center gap-4">
+          {/* Actions: Desktop CTA + Mobile menu button */}
+          <div className="flex items-center gap-4">
+            {/* Desktop CTA */}
             <Button
               variant="primary"
               size="sm"
               onClick={() => handleNavClick('#contact')}
-              className="px-5 py-2"
+              className="hidden md:block px-5 py-2"
             >
               Contactar
             </Button>
 
+            {/* Mobile menu button - SIEMPRE visible */}
             <button
               className="md:hidden p-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -131,6 +134,7 @@ export function Navbar() {
           </div>
         </div>
 
+        {/* Mobile menu */}
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div
