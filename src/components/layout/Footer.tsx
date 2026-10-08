@@ -1,10 +1,12 @@
 import { personalInfo } from '../../data/personal';
 import { navItems } from '../../data/personal';
 import { GithubIcon } from '../ui/Icons';
-import { Link, useLocation } from 'react-router-dom';
+import { scrollToSection } from '../../utils/scroll';
 
 export function Footer() {
-  const location = useLocation();
+  const handleNavClick = (href: string) => {
+    scrollToSection(href);
+  };
 
   return (
     <footer className="border-t border-slate-200 dark:border-slate-800 py-10 bg-white dark:bg-slate-950">
@@ -23,13 +25,16 @@ export function Footer() {
           <ul className="flex flex-wrap items-center gap-4 md:gap-6 text-sm text-slate-500 dark:text-slate-400">
             {navItems.slice(0, -1).map((item) => (
               <li key={item.label}>
-                <Link
-                  to={item.href}
-                  className="hover:text-primary transition-colors"
-                  onClick={() => window.location.href = item.href}
+                <a
+                  href={item.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavClick(item.href);
+                  }}
+                  className="hover:text-primary transition-colors cursor-pointer"
                 >
                   {item.label}
-                </Link>
+                </a>
               </li>
             ))}
             <li>
