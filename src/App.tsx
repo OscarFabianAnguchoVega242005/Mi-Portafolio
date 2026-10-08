@@ -1,4 +1,4 @@
-import { Navbar } from './components/layout/Navbar';
+import { NavbarComponent } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
 import { Hero } from './components/sections/Hero';
 import { About } from './components/sections/About';
@@ -9,7 +9,7 @@ import { Contact } from './components/sections/Contact';
 function App() {
   return (
     <>
-      <Navbar />
+      <NavbarComponent />
       <main id="main-content" className="pt-16 md:pt-20">
         <Hero />
         <About />
