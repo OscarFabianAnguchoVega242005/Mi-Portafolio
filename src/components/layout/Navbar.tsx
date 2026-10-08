@@ -89,6 +89,7 @@ export function NavbarComponent() {
               <a
                 key={item.label}
                 href={item.href}
+                onClick={(e) => { e.preventDefault(); handleNavClick(item.href); }}
                 className={cn(
                   'text-sm font-medium transition-colors relative pb-1',
                   activeSection === item.href
@@ -135,6 +136,7 @@ export function NavbarComponent() {
                   <a
                     key={item.label}
                     href={item.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
                     className={cn(
                       'block w-full text-left px-4 py-3 rounded-lg font-medium transition-colors touch-manipulation',
                       activeSection === item.href
