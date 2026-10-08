@@ -174,7 +174,7 @@ export function Contact() {
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
           >
-            <Card className="p-6 md:p-8 bg-white/80 dark:bg-slate-850/80 backdrop-blur-sm border-slate-200 dark:border-slate-800">
+            <Card className="p-6 md:p-8 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border-slate-200 dark:border-slate-800">
               <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-6">Enviar mensaje</h3>
 
               {submitStatus === 'success' && (

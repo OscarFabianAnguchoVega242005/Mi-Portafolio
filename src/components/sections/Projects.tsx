@@ -125,7 +125,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       <Card
         className={cn(
           'flex flex-col h-full',
-          'bg-white dark:bg-slate-850 border border-slate-200 dark:border-slate-800',
+          'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800',
           'hover:border-primary/50 dark:hover:border-primary/50',
           'hover:-translate-y-1 transition-all duration-200'
         )}
@@ -187,7 +187,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 
 function ProjectCardSkeleton() {
   return (
-    <Card className="flex flex-col h-full bg-white dark:bg-slate-850 border border-slate-200 dark:border-slate-800 animate-pulse">
+    <Card className="flex flex-col h-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 animate-pulse">
       <CardHeader className="p-0">
         <div className="aspect-[16/10] bg-slate-200 dark:bg-slate-800" />
       </CardHeader>
