@@ -1,8 +1,6 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { personalInfo } from '../../data/personal';
-import { Button } from '../ui/Button';
 import { DownloadIcon, CheckIcon } from '../ui/Icons';
-import { scrollToSection } from '../../utils/scroll';
 import { SectionHeader } from '../ui/SectionHeader';
 
 export function About() {
@@ -75,15 +73,14 @@ export function About() {
           >
             <div className="space-y-6">
               <div className="flex items-center gap-3">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  onClick={() => scrollToSection('#contact')}
-                  className="gap-2"
+                <a
+                  href="/Oscar_Angucho_HV.pdf"
+                  download="Oscar_Angucho_CV.pdf"
+                  className="inline-flex items-center gap-2 px-6 py-3 border-2 border-primary text-primary font-semibold rounded-lg hover:bg-primary hover:text-white transition-colors"
                 >
-                  <DownloadIcon />
+                  <DownloadIcon className="w-5 h-5" />
                   Descargar CV
-                </Button>
+                </a>
                 <a
                   href="https://github.com/OscarFabianAnguchoVega242005?tab=repositories"
                   target="_blank"
