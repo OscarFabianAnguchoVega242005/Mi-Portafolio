@@ -59,62 +59,119 @@ export function Navbar() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-300 h-16',
         isScrolled
-          ? 'bg-white/90 dark:bg-slate-950/90 backdrop-blur-md border-b border-slate-200/50 dark:border-slate-800/50'
-          : 'bg-transparent'
+          ? 'bg-white/95 dark:bg-slate-950/95 backdrop-blur-md border-b border-slate-200/50 dark:border-slate-800/50'
+          : 'bg-white/80 dark:bg-slate-950/80 backdrop-blur-md'
       )}
     >
-      <nav className="container mx-auto px-6" aria-label="Navegación principal">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between h-18 md:h-auto md:py-4 gap-4">
-          {/* Logo + Nav horizontal scrollable en móvil */}
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between w-full gap-4">
-            <a
-              href="#home"
-              onClick={(e) => {
-                e.preventDefault();
-                handleNavClick('#home');
-              }}
-              className="text-xl font-bold bg-gradient-to-r from-primary to-indigo-600 bg-clip-text text-transparent flex-shrink-0"
-              aria-label="Ir al inicio"
-            >
-              Oscar Angucho
-            </a>
+      <nav className="container mx-auto px-4 h-full" aria-label="Navegación principal">
+        <div className="flex items-center justify-between h-full gap-4">
+          {/* Logo - siempre visible */}
+          <a
+            href="#home"
+            onClick={(e) => {
+              e.preventDefault();
+              handleNavClick('#home');
+            }}
+            className="text-xl font-bold bg-gradient-to-r from-primary to-indigo-600 bg-clip-text text-transparent flex-shrink-0"
+            aria-label="Ir al inicio"
+          >
+            Oscar Angucho
+          </a>
 
-            {/* Nav horizontal scrollable en móvil, horizontal fijo en desktop */}
-            <div className="flex flex-wrap md:flex-nowrap items-center gap-1 md:gap-4 w-full md:w-auto justify-center md:justify-end overflow-x-auto md:overflow-visible pb-2 md:pb-0 -mb-2 md:mb-0 scrollbar-hide">
-              {navItems.map((item) => (
-                <motion.a
-                  key={item.label}
-                  href={item.href}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNavClick(item.href);
-                  }}
+          {/* Desktop Nav - siempre horizontal */}
+          <div className="hidden md:flex items-center gap-6">
+            {navItems.map((item) => (
+              <motion.a
+                key={item.label}
+                href={item.href}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavClick(item.href);
+                }}
+                className={cn(
+                  'text-sm font-medium transition-colors relative pb-1',
+                  activeSection === item.href
+                    ? 'text-primary'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-primary'
+                )}
+                whileHover={{ y: -1 }}
+              >
+                {item.label}
+                <span
                   className={cn(
-                    'text-sm font-medium transition-colors relative pb-1 px-3 py-2 rounded-lg touch-manipulation whitespace-nowrap flex-shrink-0',
+                    'absolute bottom-0 left-0 right-0 h-0.5 transition-transform duration-200',
                     activeSection === item.href
-                      ? 'bg-primary/10 text-primary'
-                      : 'text-slate-600 dark:text-slate-400 hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800'
+                      ? 'bg-primary scale-x-100 origin-center'
+                      : 'bg-primary scale-x-0 origin-center'
                   )}
-                  whileHover={{ y: -1 }}
-                >
-                  {item.label}
-                </motion.a>
-              ))}
-            </div>
+                />
+              </motion.a>
+            ))}
           </div>
 
-          {/* Contactar button */}
-          <Button
-            variant="primary"
-            size="sm"
-            onClick={() => handleNavClick('#contact')}
-            className="md:hidden w-full md:w-auto touch-manipulation flex-shrink-0"
-          >
-            Contactar
-          </Button>
+          {/* Mobile: hamburger button + desktop CTA */}
+          <div className="flex items-center gap-3">
+            {/* Desktop CTA */}
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={() => handleNavClick('#contact')}
+              className="hidden md:block px-5 py-2"
+            >
+              Contactar
+            </Button>
+
+            {/* Mobile hamburger button */}
+            <button
+              className="md:hidden p-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 touch-manipulation"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label={isMobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
+              aria-expanded={isMobileMenuOpen}
+            >
+              {isMobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
+            </button>
+          </div>
         </div>
+
+        {/* Mobile dropdown menu */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="md:hidden absolute top-full left-0 right-0 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 py-4 shadow-lg"
+            >
+              <div className="container mx-auto px-4 space-y-2">
+                {navItems.map((item) => (
+                  <motion.button
+                    key={item.label}
+                    type="button"
+                    onClick={() => handleNavClick(item.href)}
+                    className={cn(
+                      'block w-full text-left px-4 py-3 rounded-lg font-medium transition-colors touch-manipulation',
+                      activeSection === item.href
+                        ? 'bg-primary/10 text-primary'
+                        : 'text-slate-600 dark:text-slate-400 hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800'
+                    )}
+                    layout
+                  >
+                    {item.label}
+                  </motion.button>
+                ))}
+                <Button
+                  variant="primary"
+                  className="w-full mt-2 touch-manipulation"
+                  onClick={() => handleNavClick('#contact')}
+                >
+                  Contactar
+                </Button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </nav>
     </motion.header>
   );
