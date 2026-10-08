@@ -1,5 +1,4 @@
 import { motion, useReducedMotion } from 'framer-motion';
-import { useState } from 'react';
 import { projects, type Project } from '../../data/projects';
 import { Card, CardContent, CardFooter, CardHeader } from '../ui/Card';
 import { Button } from '../ui/Button';
@@ -7,26 +6,12 @@ import { cn } from '../../utils/helpers';
 import { useGitHubProjects } from '../../hooks';
 import { GithubIcon, ExternalLinkIcon } from '../ui/Icons';
 
-const categoryLabels: Record<string, string> = {
-  all: 'Todos',
-  fullstack: 'Full Stack',
-  frontend: 'Frontend',
-  backend: 'Backend',
-  mobile: 'Móvil',
-};
-
-const categories = ['all', 'fullstack', 'frontend', 'backend', 'mobile'] as const;
-
 export function Projects() {
   const reduceMotion = useReducedMotion();
   const { projects: githubProjects, loading, error } = useGitHubProjects();
-  const [activeCategory, setActiveCategory] = useState<'all' | Project['category']>('all');
 
   // Usar proyectos de GitHub si están cargados, sino los de ejemplo
   const allProjects = loading || error ? projects : githubProjects.length > 0 ? githubProjects : projects;
-  const filteredProjects = activeCategory === 'all'
-    ? allProjects
-    : allProjects.filter(p => p.category === activeCategory);
 
   if (loading) {
     return (
@@ -85,49 +70,20 @@ export function Projects() {
           </p>
         </motion.div>
 
-        {/* Filtros */}
-        <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
-          className="flex flex-wrap justify-center gap-3 mb-12"
-          role="tablist"
-        >
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              role="tab"
-              aria-selected={activeCategory === cat}
-              onClick={() => setActiveCategory(cat as any)}
-              className={cn(
-                'px-5 py-2 rounded-full text-sm font-medium transition-all duration-200',
-                'border border-slate-200 dark:border-slate-700',
-                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary',
-                activeCategory === cat
-                  ? 'bg-primary text-white border-primary shadow-sm'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-primary hover:border-primary/50'
-              )}
-            >
-              {categoryLabels[cat]}
-            </button>
-          ))}
-        </motion.div>
-
         {/* Grid de proyectos */}
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
+          transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
           className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          {filteredProjects.length === 0 ? (
+          {allProjects.length === 0 ? (
             <div className="col-span-full text-center py-12">
-              <p className="text-slate-600 dark:text-slate-400">No hay proyectos en esta categoría.</p>
+              <p className="text-slate-600 dark:text-slate-400">No hay proyectos disponibles.</p>
             </div>
           ) : (
-            filteredProjects.map((project, index) => (
+            allProjects.map((project, index) => (
               <ProjectCard key={project.id} project={project} index={index} />
             ))
           )}
@@ -137,7 +93,7 @@ export function Projects() {
           initial={reduceMotion ? false : { opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3, ease: 'easeOut' }}
+          transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
           className="mt-12 text-center"
         >
           <a
