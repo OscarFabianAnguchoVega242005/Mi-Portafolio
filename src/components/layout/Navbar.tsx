@@ -66,110 +66,55 @@ export function Navbar() {
       )}
     >
       <nav className="container mx-auto px-6" aria-label="Navegación principal">
-        <div className="flex items-center justify-between h-18">
-          <a
-            href="#home"
-            onClick={(e) => {
-              e.preventDefault();
-              handleNavClick('#home');
-            }}
-            className="text-xl font-bold bg-gradient-to-r from-primary to-indigo-600 bg-clip-text text-transparent"
-            aria-label="Ir al inicio"
-          >
-            Oscar Angucho
-          </a>
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between h-18 md:h-auto md:py-4 gap-4">
+          {/* Logo + Nav móvil fijo */}
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between w-full gap-4">
+            <a
+              href="#home"
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavClick('#home');
+              }}
+              className="text-xl font-bold bg-gradient-to-r from-primary to-indigo-600 bg-clip-text text-transparent"
+              aria-label="Ir al inicio"
+            >
+              Oscar Angucho
+            </a>
 
-          {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-8">
-            {navItems.map((item) => (
-              <motion.a
-                key={item.label}
-                href={item.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleNavClick(item.href);
-                }}
-                className={cn(
-                  'text-sm font-medium transition-colors relative pb-1',
-                  activeSection === item.href
-                    ? 'text-primary'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-primary'
-                )}
-                whileHover={{ y: -1 }}
-              >
-                {item.label}
-                <span
+            {/* Nav visible en móvil y desktop */}
+            <div className="flex flex-wrap items-center gap-2 md:gap-4 w-full md:w-auto justify-center md:justify-end">
+              {navItems.map((item) => (
+                <motion.a
+                  key={item.label}
+                  href={item.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavClick(item.href);
+                  }}
                   className={cn(
-                    'absolute bottom-0 left-0 right-0 h-0.5 transition-transform duration-200',
+                    'text-sm font-medium transition-colors relative pb-1 px-3 py-2 rounded-lg touch-manipulation',
                     activeSection === item.href
-                      ? 'bg-primary scale-x-100 origin-center'
-                      : 'bg-primary scale-x-0 origin-center'
+                      ? 'bg-primary/10 text-primary'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800'
                   )}
-                />
-              </motion.a>
-            ))}
-          </div>
-
-          {/* Actions: Desktop CTA + Mobile menu button */}
-          <div className="flex items-center gap-4">
-            {/* Desktop CTA */}
-            <Button
-              variant="primary"
-              size="sm"
-              onClick={() => handleNavClick('#contact')}
-              className="hidden md:block px-5 py-2"
-            >
-              Contactar
-            </Button>
-
-            {/* Mobile menu button - SIEMPRE visible */}
-            <button
-              className="md:hidden p-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 touch-manipulation"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label={isMobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
-              aria-expanded={isMobileMenuOpen}
-            >
-              {isMobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile menu */}
-        <AnimatePresence>
-          {isMobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="md:hidden overflow-hidden bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800"
-            >
-              <div className="px-6 py-4 space-y-2">
-                {navItems.map((item) => (
-                  <button
-                    key={item.label}
-                    type="button"
-                    onClick={() => handleNavClick(item.href)}
-                    className={cn(
-                        'block w-full text-left px-4 py-3 rounded-lg font-medium transition-colors touch-manipulation',
-                        activeSection === item.href
-                          ? 'bg-primary/10 text-primary'
-                          : 'text-slate-600 dark:text-slate-400 hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800'
-                      )}
-                  >
-                    {item.label}
-                  </button>
-                ))}
-                <Button
-                  variant="primary"
-                  className="w-full mt-2 touch-manipulation"
-                  onClick={() => handleNavClick('#contact')}
+                  whileHover={{ y: -1 }}
                 >
-                  Contactar
-                </Button>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+                  {item.label}
+                </motion.a>
+              ))}
+            </div>
+          </div>
+
+          {/* Contactar button */}
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={() => handleNavClick('#contact')}
+            className="md:hidden w-full md:w-auto touch-manipulation"
+          >
+            Contactar
+          </Button>
+        </div>
       </nav>
     </motion.header>
   );
