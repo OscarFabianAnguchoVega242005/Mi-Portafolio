@@ -17,23 +17,23 @@ const skillCategories = [
       { name: 'TypeScript', level: 'Básico' },
     ],
   },
-  {
-    name: 'Bases de datos',
-    skills: [
-      { name: 'Supabase', level: 'Intermedio' },
-      { name: 'PostgreSQL', level: 'Intermedio' },
-      { name: 'MySQL', level: 'Básico' },
-    ],
-  },
-  {
-    name: 'Herramientas',
-    skills: [
-      { name: 'Git', level: 'Intermedio' },
-      { name: 'GitHub', level: 'Intermedio' },
-      { name: 'Cloudflare Pages', level: 'Intermedio' },
-      { name: 'Render', level: 'Básico' },
-    ],
-  },
+{
+      name: 'Bases de datos',
+      skills: [
+        { name: 'Supabase', level: 'Intermedio' },
+        { name: 'PostgreSQL', level: 'Intermedio' },
+        { name: 'MySQL', level: 'Intermedio' },
+      ],
+    },
+{
+      name: 'Herramientas',
+      skills: [
+        { name: 'Git', level: 'Intermedio' },
+        { name: 'GitHub', level: 'Intermedio' },
+        { name: 'Cloudflare Pages', level: 'Intermedio' },
+        { name: 'Render', level: 'Intermedio' },
+      ],
+    },
   {
     name: 'Aprendiendo',
     skills: [
