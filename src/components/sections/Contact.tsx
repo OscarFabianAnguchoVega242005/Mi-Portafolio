@@ -4,7 +4,7 @@ import { personalInfo } from '../../data/personal';
 import { Button } from '../ui/Button';
 import { Input, Textarea } from '../ui/Input';
 import { Card } from '../ui/Card';
-import { MailIcon, PhoneIcon, LocationIcon, SendIcon } from '../ui/Icons';
+import { MailIcon, PhoneIcon, LocationIcon, SendIcon, WhatsAppIcon } from '../ui/Icons';
 import { SectionHeader } from '../ui/SectionHeader';
 
 interface FormData {
@@ -27,6 +27,8 @@ const initialFormData: FormData = {
   subject: '',
   message: '',
 };
+
+const WHATSAPP_PHONE = '573133003370'; // 57 = Colombia, sin + ni espacios
 
 const contactInfo = [
   {
@@ -57,7 +59,6 @@ export function Contact() {
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
@@ -86,37 +87,31 @@ export function Contact() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!validateForm()) return;
 
     setIsSubmitting(true);
-    setSubmitStatus('idle');
 
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
+    // Construir mensaje para WhatsApp
+    const whatsappMessage = `Hola Oscar, te contacto desde tu portfolio:%0A%0A` +
+      `*Nombre:* ${formData.name}%0A` +
+      `*Email:* ${formData.email}%0A` +
+      `*Asunto:* ${formData.subject}%0A%0A` +
+      `*Mensaje:*%0A${formData.message}`;
 
-      const data = await response.json();
+    const whatsappUrl = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(whatsappMessage)}`;
 
-      if (!response.ok) {
-        throw new Error(data.error || 'Error enviando el mensaje');
-      }
+    // Abrir WhatsApp en nueva pestaña
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
 
-      setIsSubmitting(false);
-      setSubmitStatus('success');
-      setFormData(initialFormData);
-      setTimeout(() => setSubmitStatus('idle'), 5000);
-    } catch (error) {
-      setIsSubmitting(false);
-      setSubmitStatus('error');
-      console.error('Error:', error);
-      setTimeout(() => setSubmitStatus('idle'), 5000);
-    }
+    // Reset form y feedback visual
+    setFormData(initialFormData);
+    setIsSubmitting(false);
+
+    // Opcional: mostrar toast de confirmación
+    alert('Se abrirá WhatsApp con tu mensaje listo para enviar.');
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -189,48 +184,16 @@ export function Contact() {
             transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
           >
             <Card className="p-6 md:p-8 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border-slate-200 dark:border-slate-800">
-              <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-6">Enviar mensaje</h3>
+              <div className="flex items-center gap-3 mb-6">
+                <span className="w-10 h-10 rounded-xl bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+                  <WhatsAppIcon className="w-5 h-5 text-green-600 dark:text-green-400" />
+                </span>
+                <h3 className="text-xl font-semibold text-slate-900 dark:text-white">Enviar por WhatsApp</h3>
+              </div>
 
-              {submitStatus === 'success' && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95, y: 10 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95, y: -10 }}
-                  className="mb-6 p-4 rounded-xl bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800"
-                >
-                  <div className="flex items-center gap-3">
-                    <span className="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center flex-shrink-0">
-                      <svg className="w-5 h-5 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </span>
-                    <div>
-                      <p className="font-medium text-green-800 dark:text-green-300">¡Mensaje enviado!</p>
-                      <p className="text-sm text-green-600 dark:text-green-400">Te responderé lo antes posible.</p>
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-              {submitStatus === 'error' && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95, y: 10 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95, y: -10 }}
-                  className="mb-6 p-4 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800"
-                >
-                  <div className="flex items-center gap-3">
-                    <span className="w-10 h-10 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center flex-shrink-0">
-                      <svg className="w-5 h-5 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                    </span>
-                    <div>
-                      <p className="font-medium text-red-800 dark:text-red-300">Error al enviar</p>
-                      <p className="text-sm text-red-600 dark:text-red-400">Inténtalo de nuevo más tarde.</p>
-                    </div>
-                  </div>
-                </motion.div>
-              )}
+              <p className="text-slate-600 dark:text-slate-400 mb-6">
+                Te redirigiré a WhatsApp con el mensaje prellenado. Solo tienes que dar a "Enviar".
+              </p>
 
               <form onSubmit={handleSubmit} className="space-y-5" noValidate>
                 <div className="grid sm:grid-cols-2 gap-5">
@@ -277,12 +240,13 @@ export function Contact() {
                 />
 
                 <Button type="submit" className="w-full gap-2" isLoading={isSubmitting} size="lg">
-                  {isSubmitting ? 'Enviando...' : 'Enviar mensaje'}
+                  {isSubmitting ? 'Abriendo WhatsApp...' : 'Enviar por WhatsApp'}
                   <SendIcon className="w-5 h-5" />
+                  <WhatsAppIcon className="w-5 h-5" />
                 </Button>
 
                 <p className="text-xs text-slate-500 dark:text-slate-400 text-center">
-                  Tus datos solo se usan para responderte.
+                  Se abrirá wa.me con tu mensaje listo para enviar.
                 </p>
               </form>
             </Card>
