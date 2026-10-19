@@ -114,7 +114,6 @@ export default async function handler(
     
     const response = await fetch(`${GITHUB_API}?sort=updated&per_page=100&type=public`, {
       headers,
-      next: { revalidate: 300 }, // Cache 5 min en Vercel
     });
     
     if (!response.ok) {
