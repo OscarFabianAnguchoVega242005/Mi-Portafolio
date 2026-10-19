@@ -1,8 +1,39 @@
-import { GitHubRepo, Project } from '../../src/data/projects';
-
-interface Env {
+export interface Env {
   GITHUB_TOKEN?: string;
 }
+
+interface GitHubRepo {
+  id: number;
+  name: string;
+  full_name: string;
+  description: string | null;
+  html_url: string;
+  homepage: string | null;
+  language: string | null;
+  topics: string[];
+  fork: boolean;
+  private: boolean;
+  created_at: string;
+  updated_at: string;
+  pushed_at: string;
+  stargazers_count: number;
+}
+
+interface Project {
+  id: string;
+  title: string;
+  description: string;
+  shortDescription: string;
+  technologies: string[];
+  image: string;
+  githubUrl: string;
+  liveUrl?: string;
+  featured: boolean;
+  category: 'frontend' | 'backend' | 'fullstack' | 'mobile';
+}
+
+const GITHUB_USERNAME = 'OscarFabianAnguchoVega242005';
+const GITHUB_API = `https://api.github.com/users/${GITHUB_USERNAME}/repos`;
 
 function mapRepoToProject(repo: GitHubRepo): Project {
   const language = repo.language || 'Unknown';
@@ -57,59 +88,79 @@ function mapRepoToProject(repo: GitHubRepo): Project {
   };
 }
 
-export async function onRequestGet(context: { request: Request; env: Env }) {
-  const GITHUB_USERNAME = 'OscarFabianAnguchoVega242005';
-  const GITHUB_API = `https://api.github.com/users/${GITHUB_USERNAME}/repos`;
-  
-  try {
-    const headers: Record<string, string> = {
-      'Accept': 'application/vnd.github.v3+json',
-      'User-Agent': 'Portfolio-App',
-    };
-    
-    if (context.env.GITHUB_TOKEN) {
-      headers['Authorization'] = `Bearer ${context.env.GITHUB_TOKEN}`;
-    }
-    
-    const response = await fetch(`${GITHUB_API}?sort=updated&per_page=100&type=public`, {
+async function fetchAllRepos(env: Env): Promise<GitHubRepo[]> {
+  const allRepos: GitHubRepo[] = [];
+  let page = 1;
+  const perPage = 100;
+  let hasMore = true;
+
+  const headers: Record<string, string> = {
+    'Accept': 'application/vnd.github.v3+json',
+    'User-Agent': 'Portfolio-App',
+  };
+
+  if (env.GITHUB_TOKEN) {
+    headers['Authorization'] = `Bearer ${env.GITHUB_TOKEN}`;
+  }
+
+  while (hasMore) {
+    const response = await fetch(`${GITHUB_API}?sort=updated&per_page=${perPage}&page=${page}&type=public`, {
       headers,
-      cf: { cacheTtl: 300, cacheEverything: true },
     });
-    
+
     if (!response.ok) {
       const error = await response.text();
-      console.error('GitHub API error:', response.status, error);
-      
-      if (response.status === 403) {
-        return new Response(JSON.stringify({ 
-          error: 'GitHub API rate limit exceeded. Add GITHUB_TOKEN to increase limit.' 
-        }), { 
-          status: 429,
-          headers: { 'Content-Type': 'application/json' }
-        });
-      }
-      
-      return new Response(JSON.stringify({ error: 'Failed to fetch repos' }), { 
-        status: response.status,
-        headers: { 'Content-Type': 'application/json' }
-      });
+      console.error(`GitHub API error (page ${page}):`, response.status, error);
+      break;
     }
-    
+
     const repos: GitHubRepo[] = await response.json();
+    console.log(`Page ${page}: fetched ${repos.length} repos`);
+
+    allRepos.push(...repos);
+
+    if (repos.length < perPage) {
+      hasMore = false;
+    } else {
+      page++;
+    }
+  }
+
+  return allRepos;
+}
+
+export async function onRequestGet(context: { request: Request; env: Env }) {
+  const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+  };
+
+  if (context.request.method === 'OPTIONS') {
+    return new Response(null, { status: 200, headers: corsHeaders });
+  }
+
+  try {
+    const repos = await fetchAllRepos(context.env);
+    console.log(`Total repos fetched: ${repos.length}`);
     
-    const projects = repos
-      .filter(repo => !repo.fork && !repo.private)
+    const filtered = repos.filter(repo => !repo.fork && !repo.private);
+    console.log(`After filtering (no forks, no private): ${filtered.length}`);
+    
+    const projects = filtered
       .map(mapRepoToProject)
       .sort((a, b) => {
         if (a.featured !== b.featured) return b.featured ? 1 : -1;
         return 0;
       });
     
+    console.log(`Final projects: ${projects.length}`);
+    
     return new Response(JSON.stringify({ projects, total: projects.length, source: 'github-api' }), {
       headers: {
         'Content-Type': 'application/json',
         'Cache-Control': 'public, max-age=300, stale-while-revalidate=600',
-        'Access-Control-Allow-Origin': '*',
+        ...corsHeaders,
       },
     });
     
@@ -117,7 +168,7 @@ export async function onRequestGet(context: { request: Request; env: Env }) {
     console.error('Error fetching GitHub repos:', error);
     return new Response(JSON.stringify({ error: 'Internal server error' }), {
       status: 500,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...corsHeaders },
     });
   }
 }
