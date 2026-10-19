@@ -32,7 +32,7 @@ export function NavbarComponent() {
       }`}
     >
       <nav className="max-w-7xl mx-auto px-4" aria-label="Navegación principal">
-        <div className="flex flex-col items-center gap-2 h-14 md:h-auto py-3 md:py-0 md:flex-row md:items-center md:justify-between">
+        <div className="flex flex-col items-center gap-2 md:flex-row md:items-center md:justify-between h-14 md:h-auto py-3 md:py-0">
           <motion.button
             onClick={(e) => {
               e.preventDefault();
@@ -46,17 +46,17 @@ export function NavbarComponent() {
             Oscar Angucho
           </motion.button>
 
-          <div className="flex items-center gap-1 overflow-x-auto pb-2 md:pb-0 scrollbar-hide -mx-4 px-4 md:mx-0 w-full md:w-auto justify-center">
+          <div className="flex flex-wrap items-center justify-center gap-2 md:gap-1">
             {navItems.map((item) => (
               <motion.button
                 key={item.label}
                 onClick={() => handleNavClick(item.href)}
-                className="flex-shrink-0 text-sm font-semibold text-neutral-300 hover:text-white hover:bg-white/5 px-3 py-1.5 rounded-full transition-colors relative group whitespace-nowrap"
+                className="text-sm font-semibold text-neutral-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition-colors relative group whitespace-nowrap"
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.97 }}
               >
                 {item.label}
-                <span className="absolute bottom-0.5 left-3 right-3 h-0.5 rounded-full bg-gradient-to-r from-[#00F0FF] to-[#FF2BD6] shadow-[0_0_8px_rgba(0,240,255,0.8)] scale-x-0 group-hover:scale-x-100 origin-center transition-transform duration-300" />
+                <span className="absolute bottom-0.5 left-4 right-4 h-0.5 rounded-full bg-gradient-to-r from-[#00F0FF] to-[#FF2BD6] shadow-[0_0_8px_rgba(0,240,255,0.8)] scale-x-0 group-hover:scale-x-100 origin-center transition-transform duration-300" />
               </motion.button>
             ))}
           </div>
