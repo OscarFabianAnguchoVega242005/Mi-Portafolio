@@ -32,7 +32,7 @@ export function NavbarComponent() {
       }`}
     >
       <nav className="max-w-7xl mx-auto px-4" aria-label="Navegación principal">
-        <div className="flex flex-col items-center gap-8 md:flex-row md:items-center md:justify-between md:gap-0 min-h-[72px] md:min-h-[56px] py-5 md:py-3">
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '48px', minHeight: '120px', paddingTop: '24px', paddingBottom: '24px' }}>
           <motion.button
             onClick={(e) => {
               e.preventDefault();
@@ -46,12 +46,13 @@ export function NavbarComponent() {
             Oscar Angucho
           </motion.button>
 
-          <div className="flex items-center justify-center gap-3 md:gap-2 overflow-x-auto pb-4 scrollbar-hide w-full -mx-4 px-4 md:mx-0 md:pb-0 flex-nowrap">
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px', overflowX: 'auto', paddingBottom: '16px', width: '100%', paddingLeft: '16px', paddingRight: '16px', flexWrap: 'nowrap' }}>
             {navItems.map((item) => (
               <motion.button
                 key={item.label}
                 onClick={() => handleNavClick(item.href)}
-                className="flex-shrink-0 text-sm font-semibold text-neutral-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition-colors relative group whitespace-nowrap"
+                style={{ flexShrink: 0 }}
+                className="text-sm font-semibold text-neutral-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition-colors relative group whitespace-nowrap"
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.97 }}
               >

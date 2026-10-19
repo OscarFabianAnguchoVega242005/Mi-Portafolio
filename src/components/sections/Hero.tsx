@@ -32,7 +32,7 @@ export function Hero() {
           transition={{ duration: 0.6, ease: 'easeOut' }}
           className="max-w-3xl"
         >
-          <p className="inline-flex items-center gap-2 mb-12 px-5 py-2.5 rounded-full bg-neon-cyan/10 text-neon-cyan text-sm font-semibold border border-neon-cyan/30 backdrop-blur-sm shadow-[0_0_18px_rgba(0,240,255,0.25)]">
+          <p className="inline-flex items-center gap-2 mb-20 px-8 py-4 rounded-full bg-neon-cyan/10 text-neon-cyan text-sm font-semibold border border-neon-cyan/30 backdrop-blur-sm shadow-[0_0_18px_rgba(0,240,255,0.25)]">
             <span className="relative flex h-2 w-2" aria-hidden="true">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-neon-cyan opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-neon-cyan" />
