@@ -1,13 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { navItems } from '../../data/personal';
 import { scrollToSection } from '../../utils/scroll';
 
 export function NavbarComponent() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,7 +18,6 @@ export function NavbarComponent() {
 
   const handleNavClick = (href: string) => {
     scrollToSection(href);
-    setIsMobileMenuOpen(false);
   };
 
   return (
@@ -33,75 +31,36 @@ export function NavbarComponent() {
           : 'bg-gradient-to-b from-[#07010F]/80 to-transparent border-b border-transparent'
       }`}
     >
-      <nav className="max-w-7xl mx-auto px-6" aria-label="Navegación principal">
-        <div className="flex items-center justify-between h-16 md:h-20">
+      <nav className="max-w-7xl mx-auto px-4" aria-label="Navegación principal">
+        <div className="flex flex-col items-center gap-2 h-14 md:h-auto py-3 md:py-0 md:flex-row md:items-center md:justify-between">
           <motion.button
             onClick={(e) => {
               e.preventDefault();
               handleNavClick('#home');
             }}
-            className="font-display text-2xl font-extrabold tracking-tight bg-gradient-to-r from-[#00F0FF] to-[#FF2BD6] bg-clip-text text-transparent drop-shadow-[0_0_14px_rgba(255,43,214,0.35)]"
+            className="font-display text-xl font-extrabold tracking-tight bg-gradient-to-r from-[#00F0FF] to-[#FF2BD6] bg-clip-text text-transparent drop-shadow-[0_0_14px_rgba(255,43,214,0.35)]"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
+            aria-label="Inicio"
           >
             Oscar Angucho
           </motion.button>
 
-          <div className="hidden md:flex items-center gap-2">
+          <div className="flex items-center gap-1 overflow-x-auto pb-2 md:pb-0 scrollbar-hide -mx-4 px-4 md:mx-0 w-full md:w-auto justify-center">
             {navItems.map((item) => (
               <motion.button
                 key={item.label}
                 onClick={() => handleNavClick(item.href)}
-                className="text-sm font-semibold text-neutral-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition-colors relative group"
+                className="flex-shrink-0 text-sm font-semibold text-neutral-300 hover:text-white hover:bg-white/5 px-3 py-1.5 rounded-full transition-colors relative group whitespace-nowrap"
                 whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.97 }}
               >
                 {item.label}
-                <span className="absolute bottom-0.5 left-4 right-4 h-0.5 rounded-full bg-gradient-to-r from-[#00F0FF] to-[#FF2BD6] shadow-[0_0_8px_rgba(0,240,255,0.8)] scale-x-0 group-hover:scale-x-100 origin-center transition-transform duration-300" />
+                <span className="absolute bottom-0.5 left-3 right-3 h-0.5 rounded-full bg-gradient-to-r from-[#00F0FF] to-[#FF2BD6] shadow-[0_0_8px_rgba(0,240,255,0.8)] scale-x-0 group-hover:scale-x-100 origin-center transition-transform duration-300" />
               </motion.button>
             ))}
           </div>
-
-          <button
-            className="md:hidden p-2.5 rounded-xl border border-white/10 bg-white/5 text-neutral-200 hover:text-neon-cyan hover:border-neon-cyan/50 transition-colors"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label={isMobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
-            aria-expanded={isMobileMenuOpen}
-          >
-            {isMobileMenuOpen ? (
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            ) : (
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            )}
-          </button>
         </div>
-
-        <AnimatePresence>
-          {isMobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="md:hidden overflow-hidden bg-[#07010F]/95 backdrop-blur-xl border-t border-neon-pink/20 rounded-b-2xl"
-            >
-              <div className="py-4 space-y-1 px-2">
-                {navItems.map((item) => (
-                  <motion.button
-                    key={item.label}
-                    onClick={() => handleNavClick(item.href)}
-                    className="w-full text-left px-4 py-3 font-semibold text-neutral-200 border-l-2 border-transparent hover:border-neon-cyan hover:text-neon-cyan hover:bg-white/5 rounded-r-lg transition-colors"
-                    layout
-                  >
-                    {item.label}
-                  </motion.button>
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </nav>
     </motion.header>
   );
