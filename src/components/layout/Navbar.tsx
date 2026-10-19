@@ -32,7 +32,7 @@ export function NavbarComponent() {
       }`}
     >
       <nav className="max-w-7xl mx-auto px-4" aria-label="Navegación principal">
-        <div className="flex flex-col items-center gap-6 md:flex-row md:items-center md:justify-between md:gap-0 min-h-[64px] md:min-h-[56px] py-4 md:py-3">
+        <div className="flex flex-col items-center gap-8 md:flex-row md:items-center md:justify-between md:gap-0 min-h-[72px] md:min-h-[56px] py-5 md:py-3">
           <motion.button
             onClick={(e) => {
               e.preventDefault();
