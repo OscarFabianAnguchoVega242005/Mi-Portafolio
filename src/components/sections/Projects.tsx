@@ -2,7 +2,7 @@
 
 import type { CSSProperties } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { projects, type Project } from '../../data/projects';
+import type { Project } from '../../data/projects';
 import { Card, CardContent, CardFooter, CardHeader } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { cn } from '../../utils/helpers';
@@ -27,7 +27,8 @@ export function Projects() {
   const reduceMotion = useReducedMotion();
   const { projects: githubProjects, loading, error } = useGitHubProjects();
 
-  const allProjects = loading || error ? projects : githubProjects.length > 0 ? githubProjects : projects;
+  // Solo usa datos de la API; si falla muestra error (no fallback hardcodeado)
+  const allProjects = githubProjects;
 
   if (loading) {
     return (
@@ -82,7 +83,7 @@ export function Projects() {
             Proyectos
           </h2>
           <p className="text-lg text-neutral-300">
-            {projects.length} proyectos públicos de mi GitHub, actualizados automáticamente.
+            {allProjects.length} proyectos públicos de mi GitHub, actualizados automáticamente.
           </p>
         </motion.div>
 
@@ -93,7 +94,7 @@ export function Projects() {
           transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
           className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          {projects.map((project, index) => (
+          {allProjects.map((project, index) => (
             <ProjectCard key={project.id} project={project} index={index} />
           ))}
         </motion.div>
