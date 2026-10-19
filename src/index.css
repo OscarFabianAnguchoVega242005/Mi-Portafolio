@@ -1,0 +1,225 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #07010F;
+  --color-bg-alt: #0D0518;
+  --color-surface: #120722;
+  --color-primary: #00F0FF;
+  --color-secondary: #FF2BD6;
+  --color-accent: #FFD700;
+  --color-neon-green: #39FF14;
+  --color-text: #E8F0FF;
+  --color-text-muted: #8892B0;
+  --color-border: #2A1F4D;
+  /* Colores propios del diseño neón: nombres únicos para no chocar con otros estilos */
+  --color-neon-cyan: #19E3FF;
+  --color-neon-pink: #FF2BD6;
+  --color-neon-gold: #FFC83D;
+  --color-neon-red: #FF4D6D;
+  --color-wa: #25D366;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-display: 'Bricolage Grotesque', 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+@layer base {
+  * { box-sizing: border-box; padding: 0; margin: 0; }
+
+  html {
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-secondary) var(--color-bg);
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--color-bg);
+    color: var(--color-text);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2 { font-family: var(--font-display); }
+
+  /* Evita que la barra fija tape el inicio de cada sección al navegar */
+  section[id] { scroll-margin-top: 4.5rem; }
+
+  /* Los párrafos sobre la escena 3D llevan una sombra oscura para leerse bien */
+  :where(section[id] p) { text-shadow: 0 1px 6px rgba(7, 1, 15, .8); }
+
+  ::selection {
+    background: var(--color-secondary);
+    color: var(--color-bg);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+}
+
+@layer utilities {
+  .neon-text {
+    text-shadow:
+      0 0 5px currentColor,
+      0 0 20px currentColor,
+      0 0 40px currentColor;
+  }
+
+  .neon-border {
+    box-shadow:
+      0 0 5px currentColor,
+      0 0 20px currentColor,
+      inset 0 0 5px currentColor;
+  }
+
+  .cyber-grid {
+    background-image:
+      linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+
+  .glitch-text { animation: glitch 3s infinite; }
+
+  .hologram {
+    background: linear-gradient(135deg,
+      rgba(0, 240, 255, 0.1) 0%,
+      rgba(255, 43, 214, 0.1) 50%,
+      rgba(255, 215, 0, 0.1) 100%);
+    backdrop-filter: blur(10px);
+  }
+
+  .scanline { position: relative; overflow: hidden; }
+
+  .scanline::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 240, 255, 0.01) 2px,
+      rgba(0, 240, 255, 0.01) 4px
+    );
+    pointer-events: none;
+  }
+
+  .typing-cursor::after {
+    content: '|';
+    animation: blink 1s infinite;
+    color: var(--color-primary);
+  }
+
+  /* Título neón: color --t y resplandor --g (se definen en cada título) */
+  .nx-title {
+    color: var(--t, #FF8AEC);
+    -webkit-text-stroke: .025em #07010F;
+    paint-order: stroke fill;
+    filter:
+      drop-shadow(0 0 .12em var(--g, #FF2BD6))
+      drop-shadow(0 0 .5em color-mix(in srgb, var(--g, #FF2BD6) 55%, transparent))
+      drop-shadow(0 .04em .25em #07010F);
+  }
+
+  /* Panel de vidrio oscuro con borde tenue */
+  .nx-glass {
+    background: rgba(10, 3, 20, .72);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, .08);
+    border-radius: 1.25rem;
+  }
+
+  /* Tarjeta de neón: el color se cambia con la variable --c */
+  .nx-card {
+    --c: #19E3FF;
+    position: relative;
+    overflow: hidden;
+    border-radius: 1.25rem;
+    background: linear-gradient(160deg, color-mix(in srgb, var(--c) 12%, #0A0314) 0%, #0A0314 55%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid color-mix(in srgb, var(--c) 55%, transparent);
+    box-shadow:
+      0 0 22px color-mix(in srgb, var(--c) 22%, transparent),
+      inset 0 1px 0 color-mix(in srgb, var(--c) 45%, transparent);
+    transition: transform .25s, box-shadow .25s, border-color .25s;
+  }
+
+  .nx-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--c);
+    box-shadow:
+      0 0 36px color-mix(in srgb, var(--c) 50%, transparent),
+      inset 0 1px 0 var(--c);
+  }
+}
+
+@keyframes glitch {
+  0%, 90%, 100% { transform: translate(0); }
+  92% { transform: translate(-2px, 1px); }
+  94% { transform: translate(2px, -1px); }
+  96% { transform: translate(-1px, -1px); }
+  98% { transform: translate(1px, 1px); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-neon {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+/* ===== SnakeTitle: culebra de luz que recorre las letras del título ===== */
+.st-svg { display: block; height: auto; overflow: visible; }
+.st-svg text {
+  font: 800 100px var(--font-display);
+  letter-spacing: -4.5px;
+  fill: none;
+}
+.st-base text { fill: #fff; stroke: #07010F; stroke-width: 2.5; paint-order: stroke fill; stroke-linejoin: round; }
+.st-ring text { stroke-width: 1.4; opacity: .45; }
+.st-fx { filter: drop-shadow(0 0 3px rgba(25, 227, 255, .9)); }
+.st-fx text { stroke-linecap: round; stroke-linejoin: round; }
+
+.st-sn .st-ch {
+  animation: st-slither 7s ease-in-out infinite backwards;
+  animation-delay: calc(var(--i) * .4s);
+}
+.st-tail text { --len: 150; stroke: #39FF14; stroke-width: 7; stroke-dasharray: 150 2400; opacity: .4; }
+.st-body text { --len: 95; stroke-width: 3.6; stroke-dasharray: 95 2400; }
+.st-head text { --len: 28; stroke: #fff; stroke-width: 3.6; stroke-dasharray: 28 2400; }
+
+@keyframes st-slither {
+  0% { stroke-dashoffset: calc(var(--len) * 1px); }
+  20%, 100% { stroke-dashoffset: calc((var(--len) - 650) * 1px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .st-ch { animation: none !important; }
+}
