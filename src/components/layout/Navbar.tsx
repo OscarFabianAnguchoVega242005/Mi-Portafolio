@@ -32,13 +32,13 @@ export function NavbarComponent() {
       }`}
     >
       <nav className="max-w-7xl mx-auto px-4" aria-label="Navegación principal">
-        <div className="flex flex-col items-center gap-2 md:flex-row md:items-center md:justify-between h-14 md:h-auto py-3 md:py-0">
+        <div className="flex flex-col items-center gap-3 md:flex-row md:items-center md:justify-between md:gap-0 h-14 md:h-auto py-3 md:py-4">
           <motion.button
             onClick={(e) => {
               e.preventDefault();
               handleNavClick('#home');
             }}
-            className="font-display text-xl font-extrabold tracking-tight bg-gradient-to-r from-[#00F0FF] to-[#FF2BD6] bg-clip-text text-transparent drop-shadow-[0_0_14px_rgba(255,43,214,0.35)]"
+            className="font-display text-xl font-extrabold tracking-tight bg-gradient-to-r from-[#00F0FF] to-[#FF2BD6] bg-clip-text text-transparent drop-shadow-[0_0_14px_rgba(255,43,214,0.35)] flex-shrink-0"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             aria-label="Inicio"
