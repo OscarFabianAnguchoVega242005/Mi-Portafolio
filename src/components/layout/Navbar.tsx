@@ -37,8 +37,7 @@ export function NavbarComponent() {
     >
       <nav className="max-w-7xl mx-auto px-6" aria-label="Navegación principal">
         <div className="flex items-center justify-between h-16 md:h-20">
-          <motion.a
-            href="#home"
+          <motion.button
             onClick={(e) => {
               e.preventDefault();
               handleNavClick('#home');
@@ -48,23 +47,19 @@ export function NavbarComponent() {
             whileTap={{ scale: 0.98 }}
           >
             Oscar Angucho
-          </motion.a>
+          </motion.button>
 
           <div className="hidden md:flex items-center gap-2">
             {navItems.map((item) => (
-              <motion.a
+              <motion.button
                 key={item.label}
-                href={item.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleNavClick(item.href);
-                }}
+                onClick={() => handleNavClick(item.href)}
                 className="text-sm font-semibold text-neutral-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition-colors relative group"
                 whileHover={{ y: -2 }}
               >
                 {item.label}
                 <span className="absolute bottom-0.5 left-4 right-4 h-0.5 rounded-full bg-gradient-to-r from-[#00F0FF] to-[#FF2BD6] shadow-[0_0_8px_rgba(0,240,255,0.8)] scale-x-0 group-hover:scale-x-100 origin-center transition-transform duration-300" />
-              </motion.a>
+              </motion.button>
             ))}
           </div>
 
@@ -94,20 +89,16 @@ export function NavbarComponent() {
               exit={{ opacity: 0, height: 0 }}
               className="md:hidden overflow-hidden bg-[#07010F]/95 backdrop-blur-xl border-t border-neon-pink/20 rounded-b-2xl"
             >
-              <div className="py-4 space-y-1">
+              <div className="py-4 space-y-1 px-2">
                 {navItems.map((item) => (
-                  <motion.a
+                  <motion.button
                     key={item.label}
-                    href={item.href}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleNavClick(item.href);
-                    }}
-                    className="block px-4 py-3 font-semibold text-neutral-200 border-l-2 border-transparent hover:border-neon-cyan hover:text-neon-cyan hover:bg-white/5 rounded-r-lg transition-colors"
+                    onClick={() => handleNavClick(item.href)}
+                    className="w-full text-left px-4 py-3 font-semibold text-neutral-200 border-l-2 border-transparent hover:border-neon-cyan hover:text-neon-cyan hover:bg-white/5 rounded-r-lg transition-colors"
                     layout
                   >
                     {item.label}
-                  </motion.a>
+                  </motion.button>
                 ))}
               </div>
             </motion.div>

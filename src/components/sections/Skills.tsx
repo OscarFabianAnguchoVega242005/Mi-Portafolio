@@ -67,7 +67,7 @@ export function Skills() {
 
   return (
     <section id="skills" aria-labelledby="skills-title" className="py-24 md:py-32 bg-transparent">
-      <div className="container px-6">
+      <div className="container px-4 sm:px-6">
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}

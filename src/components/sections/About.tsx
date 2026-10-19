@@ -11,7 +11,7 @@ export function About() {
 
   return (
     <section id="about" aria-labelledby="about-title" className="py-24 md:py-32 bg-transparent">
-      <div className="container px-6">
+      <div className="container px-4 sm:px-6">
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -64,25 +64,21 @@ export function About() {
           >
             <div className="space-y-6">
               <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
-                <a
-                  href="/Oscar_Angucho_HV.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={() => window.open('/Oscar_Angucho_HV.pdf', '_blank', 'noopener,noreferrer')}
                   className="inline-flex items-center gap-2 px-6 py-3 border-2 border-neon-cyan text-neon-cyan font-bold rounded-xl shadow-[0_0_18px_rgba(0,240,255,0.25)] hover:bg-neon-cyan hover:text-[#07010F] hover:shadow-[0_0_28px_rgba(0,240,255,0.6)] transition-all touch-manipulation"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                   </svg>
                   Descargar CV
-                </a>
-                <a
-                  href="https://github.com/OscarFabianAnguchoVega242005?tab=repositories"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-neon-cyan hover:text-white underline underline-offset-4 decoration-neon-cyan/40 hover:decoration-white font-semibold transition-colors"
+                </button>
+                <button
+                  onClick={() => window.open('https://github.com/OscarFabianAnguchoVega242005?tab=repositories', '_blank', 'noopener,noreferrer')}
+                  className="text-sm text-neon-cyan hover:text-white underline underline-offset-4 decoration-neon-cyan/40 hover:decoration-white font-semibold transition-colors touch-manipulation"
                 >
                   Ver repositorios
-                </a>
+                </button>
               </div>
 
               <h3 className="text-xl font-bold text-white">Cómo trabajo</h3>

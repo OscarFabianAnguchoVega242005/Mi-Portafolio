@@ -93,7 +93,7 @@ export function Contact() {
 
   return (
     <section id="contact" className="py-20 md:py-28 bg-transparent">
-      <div className="container px-6">
+      <div className="container px-4 sm:px-6">
         <div className="max-w-3xl mx-auto text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-4">
             Hablemos
@@ -119,12 +119,10 @@ export function Contact() {
                 { icon: '📱', label: 'Teléfono', value: '+57 313 300 3370', href: 'tel:+573133003370' },
                 { icon: '📍', label: 'Ubicación', value: 'Villavicencio, Colombia', href: '#' },
               ].map((item, index) => (
-                <a
+                <button
                   key={item.label}
-                  href={item.href}
-                  target={item.href.startsWith('http') ? '_blank' : undefined}
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-4 rounded-xl bg-neutral-900/50 border border-neutral-800 hover:border-primary/50 hover:bg-white/5 transition-all duration-300 group"
+                  onClick={() => window.location.href = item.href}
+                  className="w-full flex items-center gap-3 p-4 rounded-xl bg-neutral-900/50 border border-neutral-800 hover:border-primary/50 hover:bg-white/5 transition-all duration-300 group text-left"
                 >
                   <span className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0 text-primary">
                     <span className="text-xl">{item.icon}</span>
@@ -133,7 +131,7 @@ export function Contact() {
                     <span className="text-sm text-neutral-500 block">{item.label}</span>
                     <span className="font-medium text-white truncate block">{item.value}</span>
                   </div>
-                </a>
+                </button>
               ))}
             </div>
 
@@ -198,7 +196,7 @@ export function Contact() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full inline-flex items-center justify-center px-6 py-4 rounded-xl text-lg font-bold text-[#07010F] bg-neon-cyan shadow-[0_0_24px_rgba(25,227,255,0.45)] hover:bg-white hover:shadow-[0_0_36px_rgba(25,227,255,0.8)] disabled:opacity-60 disabled:cursor-not-allowed transition-all"
+                className="w-full inline-flex items-center justify-center px-6 py-4 rounded-xl text-lg font-bold text-[#07010F] bg-neon-cyan shadow-[0_0_24px_rgba(25,227,255,0.45)] hover:bg-white hover:shadow-[0_0_36px_rgba(25,227,255,0.8)] disabled:opacity-60 disabled:cursor-not-allowed transition-all touch-manipulation"
               >
                 {isSubmitting ? 'Enviando...' : 'Enviar por WhatsApp'}
               </button>
