@@ -32,7 +32,7 @@ export function NavbarComponent() {
       }`}
     >
       <nav className="max-w-7xl mx-auto px-4" aria-label="Navegación principal">
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '48px', minHeight: '120px', paddingTop: '24px', paddingBottom: '24px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px', minHeight: '72px', paddingTop: '12px', paddingBottom: '12px' }}>
           <motion.button
             onClick={(e) => {
               e.preventDefault();
@@ -46,7 +46,7 @@ export function NavbarComponent() {
             Oscar Angucho
           </motion.button>
 
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px', overflowX: 'auto', paddingBottom: '16px', width: '100%', paddingLeft: '16px', paddingRight: '16px', flexWrap: 'nowrap' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', overflowX: 'auto', paddingBottom: '8px', width: '100%', paddingLeft: '16px', paddingRight: '16px', flexWrap: 'nowrap' }}>
             {navItems.map((item) => (
               <motion.button
                 key={item.label}
