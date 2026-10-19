@@ -46,12 +46,12 @@ export function NavbarComponent() {
             Oscar Angucho
           </motion.button>
 
-          <div className="flex flex-wrap items-center justify-center gap-2 md:gap-1">
+          <div className="flex items-center justify-center gap-2 md:gap-1 overflow-x-auto pb-2 scrollbar-hide w-full -mx-4 px-4 md:mx-0 md:pb-0 flex-nowrap">
             {navItems.map((item) => (
               <motion.button
                 key={item.label}
                 onClick={() => handleNavClick(item.href)}
-                className="text-sm font-semibold text-neutral-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition-colors relative group whitespace-nowrap"
+                className="flex-shrink-0 text-sm font-semibold text-neutral-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition-colors relative group whitespace-nowrap"
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.97 }}
               >
