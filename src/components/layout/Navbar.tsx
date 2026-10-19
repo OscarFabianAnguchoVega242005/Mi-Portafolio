@@ -32,7 +32,7 @@ export function NavbarComponent() {
       }`}
     >
       <nav className="max-w-7xl mx-auto px-4" aria-label="Navegación principal">
-        <div className="flex flex-col items-center gap-3 md:flex-row md:items-center md:justify-between md:gap-0 h-14 md:h-auto py-3 md:py-4">
+        <div className="flex flex-col items-center gap-6 md:flex-row md:items-center md:justify-between md:gap-0 min-h-[64px] md:min-h-[56px] py-4 md:py-3">
           <motion.button
             onClick={(e) => {
               e.preventDefault();
@@ -46,7 +46,7 @@ export function NavbarComponent() {
             Oscar Angucho
           </motion.button>
 
-          <div className="flex items-center justify-center gap-2 md:gap-1 overflow-x-auto pb-2 scrollbar-hide w-full -mx-4 px-4 md:mx-0 md:pb-0 flex-nowrap">
+          <div className="flex items-center justify-center gap-3 md:gap-2 overflow-x-auto pb-4 scrollbar-hide w-full -mx-4 px-4 md:mx-0 md:pb-0 flex-nowrap">
             {navItems.map((item) => (
               <motion.button
                 key={item.label}
