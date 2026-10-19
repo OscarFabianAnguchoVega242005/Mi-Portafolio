@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { navItems } from '../../data/personal';
+import { scrollToSection } from '../../utils/scroll';
 
 export function NavbarComponent() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -17,11 +18,8 @@ export function NavbarComponent() {
   }, []);
 
   const handleNavClick = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setIsMobileMenuOpen(false);
-    }
+    scrollToSection(href);
+    setIsMobileMenuOpen(false);
   };
 
   return (
